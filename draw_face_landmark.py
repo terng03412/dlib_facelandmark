@@ -21,23 +21,17 @@ DRAW_IDXS = OrderedDict([("left_brow", (17,18,19,20,21)),
 # import the necessary packages
 from imutils.video import VideoStream
 from imutils import face_utils
-import argparse
 import imutils
 import time
 import dlib
 import cv2
 
-# construct the argument parser and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-p", "--shape-predictor", required=True,
-	help="path to facial landmark predictor")
-args = vars(ap.parse_args())
 
 # initialize dlib's face detector (HOG-based) and then load our
 # trained shape predictor
 print("[INFO] loading facial landmark predictor...")
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor(args["shape_predictor"])
+predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
 
 # initialize the video stream and allow the cammera sensor to warmup
 print("[INFO] camera sensor warming up...")
@@ -49,7 +43,7 @@ while True:
 	# grab the frame from the video stream, resize it to have a
 	# maximum width of 400 pixels, and convert it to grayscale
 	frame = vs.read()
-	frame = imutils.resize(frame, width=1200)
+	frame = imutils.resize(frame, width=800)
 	overlay = frame.copy()
 	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
